@@ -22,17 +22,16 @@ export default NextAuth({
 
           if (user) {
             if (await confirmPasswordHash(credentials?.password, user.password)) {
-              const data: Partial<User> = {
+              return {
+                id: user.id,
                 email: user.email,
                 name: user.name,
               };
-              console.log(data);
-              return data;
             }
             throw new Error("Не верные данные!");
           }
         } catch (err: any) {
-          console.log("Authorize error:", err.message);
+          console.error("Authorize error:", err.message);
           throw err;
         }
 

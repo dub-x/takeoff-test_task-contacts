@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import type { Session } from "next-auth";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
@@ -14,7 +15,10 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "../styles/globals.css";
 
-interface MyAppProps extends AppProps {
+interface MyAppProps
+  extends AppProps<{
+    session?: Session | null;
+  }> {
   emotionCache?: EmotionCache;
 }
 
@@ -24,7 +28,8 @@ const lightTheme = createTheme(lightThemeOptions);
 
 function MyApp({
   Component,
-  pageProps: { session, emotionCache = clientSideEmotionCache, ...pageProps },
+  emotionCache = clientSideEmotionCache,
+  pageProps: { session, ...pageProps },
 }: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
