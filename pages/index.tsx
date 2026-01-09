@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
+import prisma from "../src/lib/prisma";
 
 export const getServerSideProps = async () => {
   return prisma.user.findFirst();
